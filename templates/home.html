@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>省级地域信息检测系统</title>
+    <link rel="stylesheet" type="text/css" href="/static/bootstrap-3.3.7-dist/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="/static/bootstrap-3.3.7-dist/css/style.css">
+    <style>
+        h1,h2,h3,h4 {text-align: center;color: #f8f8f8}
+        div.section {padding-top:50px;}
+        button#m5,button#m6 {margin-left: 10px; margin-right: 10px}
+        ul.u{color:Black}
+        #m5,#m6 {color:FireBrick}
+    </style>
+</head>
+<body style="position: relative" data-spy="scroll" data-target="#navbar">
+<div class="bg-img" style="background-image: url('../static/img/background1.jpg');">
+		<div class="overlay"></div>
+	</div>
+<div class="container" style="margin-top:50px;">
+<div class="page-header">
+  <h1>省级地域信息检测功能演示 <small></small></h1>
+</div>
+<form action="/" method="post" style="margin-bottom: 30px;">
+    <p><textarea placeholder="请输入要分析地域的文本" class="form-control" rows="5" name="arti" id="ner_txt"></textarea></p>
+    <button type="button" class="btn btn-primary btn-lg btn-block pull-left" onclick="save_data()">提交</button>
+</form>
+<div id="ner" class="section">
+    <div class="pos_neg"><h2>结果展示</h2>
+        <div class="row"style="position: center">
+            <div class="col-md-offset-4 col-lg-4" >
+                <div class="panel panel-default">
+                    <div class="panel-heading"><h4><p class="text-danger">归属地</p></h4></div>
+                    <div class="panel-body" id="pos">
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+    <br></br>
+    <br></br>
+    <br></br>
+    <br></br>
+    <br></br>
+    <br></br>
+    <br></br>
+
+<div style="margin-top:40px;"><p style="text-align: center">copyright关宇航</p></div>
+<script type="text/javascript" src="/static/echarts.min.js"></script>
+<script type="text/javascript" src="/static/jquery-3.3.1.min.js"></script>
+<script type="text/javascript" src="/static/bootstrap-3.3.7-dist/js/bootstrap.min.js"></script>
+<script>
+  function save_data() {
+      var word = $("#ner_txt").val();
+      $("#pos").html("");
+      $.ajax({
+            url: "/",
+            data: {"content": word},
+            dataType: "json",
+            type: "POST",
+            success:function(sim){
+                div_box_neg = $("#pos");
+                if(sim["status"] == "1") {
+                    div_box_neg.append('<ul class="u">' + '<li>' + sim.result + '</li>' + '</ul>')
+                }
+            }
+        })
+  }
+  </script>
+<!-- //Body -->
+</div>
+
+</body>
+</html>
